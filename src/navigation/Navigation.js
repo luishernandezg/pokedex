@@ -1,17 +1,52 @@
 import React from "react";
+import { Image } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FavoriteScreen from "../screens/Favorite";
-import PokedexScreen from "../screens/Pokedex";
-import AccountScreen from "../screens/Account";
+import FavoriteNavigation from "./FavoriteNavigation";
+import PokedexNavigation from "./PokedexNavigation";
+import AccountNavigation from "./AccountNavigation";
 
 export default function Navigation() {
   const Tab = createBottomTabNavigator();
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Favorite" component={FavoriteScreen} />
-      <Tab.Screen name="Pokedex" component={PokedexScreen} />
-      <Tab.Screen name="Account" component={AccountScreen} />
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name="FavoriteTab"
+        component={FavoriteNavigation}
+        options={{
+          tabBarLabel: "Favoroitos",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="heart-o" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="PokedexTab"
+        component={PokedexNavigation}
+        options={{
+          tabBarLabel: "",
+          tabBarIcon: () => renderPokeball(),
+        }}
+      />
+      <Tab.Screen
+        name="AccountTab"
+        component={AccountNavigation}
+        options={{
+          tabBarLabel: "My cuenta",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="user-o" size={size} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
+  );
+}
+function renderPokeball() {
+  return (
+    <Image
+      source={require("../assets/pokeball.png")}
+      style={{ width: 75, height: 75, top: -15 }}
+    />
   );
 }
