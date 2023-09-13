@@ -6,6 +6,7 @@ import PokemonList from "../components/PokemonList";
 export default function Pokedex() {
   const [pokemons, setPokemons] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -15,6 +16,8 @@ export default function Pokedex() {
 
   const loadPokemons = async () => {
     try {
+      // inicializamos la "carga" del request
+      setLoading(true);
       const response = await getPokemonsApi(nextUrl);
       setNextUrl(response.next);
 
@@ -35,6 +38,9 @@ export default function Pokedex() {
       setPokemons([...pokemons, ...pokemonsArray]);
     } catch (error) {
       console.error(error);
+    } finally {
+      // regresamos loading a false
+      setLoading(false);
     }
   };
 
@@ -44,6 +50,7 @@ export default function Pokedex() {
         pokemons={pokemons}
         loadPokemons={loadPokemons}
         isNext={nextUrl}
+        isLoading={loading}
       />
     </SafeAreaView>
   );
