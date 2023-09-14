@@ -2,6 +2,7 @@ import { View, ScrollV, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getPokemonDetailsApi } from "../api/pokemon";
 import Header from "../components/pokemon/Header";
+import Type from "../components/pokemon/Type";
 
 export default function Pokemon(props) {
   const {
@@ -26,11 +27,12 @@ export default function Pokemon(props) {
   return (
     <ScrollView>
       <Header
-      name={pokemon.name}
-      order={pokemon.order}
-      image={pokemon.sprites.other["official-artwork"].front_default}
-      type={pokemon.types[0].type.name}
-       />
+        name={pokemon.name}
+        order={pokemon.order}
+        image={pokemon.sprites.other["official-artwork"].front_default}
+        type={pokemon.types[0].type.name}
+      />
+      <Type types={pokemon.types} />
     </ScrollView>
   );
 }
